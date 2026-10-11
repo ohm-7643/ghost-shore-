@@ -234,15 +234,19 @@ class ExplorerHandler(SimpleHTTPRequestHandler):
         self._send_json(result)
 
 
-def main() -> None:
-    """Start the local-only explorer on loopback."""
-    server = ThreadingHTTPServer(("127.0.0.1", 8000), ExplorerHandler)
-    print("Ghost Shore explorer: http://127.0.0.1:8000")
-    print("Local only; no live inference or external services.")
+
+def main():
+    import os
+
+    port = int(os.environ.get("PORT", "8000"))
+    server = ThreadingHTTPServer(("0.0.0.0", port), ExplorerHandler)
+
+    print(f"Ghost Shore explorer listening on 0.0.0.0:{port}", flush=True)
+
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        print("\nExplorer stopped.")
+        pass
     finally:
         server.server_close()
 
