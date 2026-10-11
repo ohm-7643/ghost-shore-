@@ -142,3 +142,33 @@ redistribution rights are being verified. The explorer currently expects
 `data/raw/bangalore_1854.jpg`; obtain a lawfully reusable copy and place it
 there before launching the web app. Do not assume that catalogue attribution
 alone grants permission to redistribute the scan.
+
+## Quick start
+
+Requirements: Python 3.10+ and pip.
+
+1. Clone the repository:
+   `git clone https://github.com/ohm-7643/ghost-shore-.git`
+2. Enter the project:
+   `cd ghost-shore-`
+3. Create and activate a virtual environment:
+   `python3 -m venv .venv`
+   `source .venv/bin/activate`
+4. Install dependencies:
+   `python -m pip install -r requirements.txt`
+5. Start the local web server:
+   `PYTHONDONTWRITEBYTECODE=1 python src/ghost_shore_web.py`
+6. Open `http://127.0.0.1:8000`.
+
+### Historical map asset
+
+The original scan is not included while redistribution rights are being verified. The explorer expects `data/raw/bangalore_1854.jpg`; obtain a lawfully reusable copy and place it at that path before launching. Catalogue attribution alone does not establish permission to redistribute a scan.
+
+### Tests
+
+Run:
+`PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v`
+
+### Project status
+
+Historical feature candidates are research leads, not verified historical facts. Georeferencing is approximate, and candidate locations require human review. The AI assistant may use an offline fallback when local model access is unavailable.
