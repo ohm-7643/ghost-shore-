@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "source_map": {
+    "image_path": "data/raw/bangalore_1854.jpg",
+    "width_px": 1280,
+    "height_px": 1557,
+    "coordinate_space": "source_image_pixels_top_left_xyxy_exclusive",
+    "sha256": "c029ad6b635b9a5ddab6c7281f43b8a95074b656e8fb0fe6f4b88e49a6616396"
+  },
+  "features": [
+    {
+      "feature_id": "GS-1854-001",
+      "display_name": "Tank (unnamed)",
+      "alternative_readings": [
+        "“Tank” (generic printed label); no proper name recorded"
+      ],
+      "category": "tank",
+      "annotation_confidence": "medium",
+      "bbox_xyxy": [
+        75,
+        585,
+        180,
+        690
+      ],
+      "direct_observations": [
+        "The printed label \"Tank\" appears inside a bounded, wedge-like area; the boundary and nearby stippled marks are visible on the map."
+      ],
+      "interpretation": "A feature labeled tank on the historical map; a water-body candidate, not evidence that it is a lake or that it later disappeared.",
+      "uncertainty_notes": [
+        "The label does not establish the feature's proper name, water extent, modern identity, or later history.",
+        "The outline could delimit the labeled feature or a separate bounded area."
+      ],
+      "evidence_needed": [
+        "Compare the box with a higher-resolution scan of the same atlas sheet and its full surrounding context.",
+        "Check an atlas legend or companion sheets for the cartographic convention used for tanks and boundaries.",
+        "Seek a second dated map or archival record that links a distinct nearby toponym or landmark to this exact feature."
+      ],
+      "evidence_status": "unverified",
+      "evidence_references": [
+        {
+          "reference_id": "original-map-scan",
+          "source": "data/raw/bangalore_1854.jpg",
+          "evidence_status": "source_scan_context_only",
+          "scope_note": "Original raster containing the marked source-image pixels; it does not establish a modern location."
+        },
+        {
+          "reference_id": "milestone-1-annotation",
+          "source": "outputs/milestone_1/candidate_annotations.json",
+          "evidence_status": "annotation_pending_human_review",
+          "scope_note": "Existing observation and interpretation are retained as annotation text and remain pending review."
+        },
+        {
+          "reference_id": "candidate-research-note",
+          "source": "docs/candidate_research.md#gs-1854-001",
+          "evidence_status": "research_note_unverified",
+          "scope_note": "Research summary of visible evidence and unresolved identity questions; not independent identity confirmation."
+        },
+        {
+          "reference_id": "british-library-sheet-record",
+          "source": "https://searcharchives.bl.uk/catalog/041-002248113",
+          "evidence_status": "catalog_context_only",
+          "scope_note": "Catalogue context for No. 48 Plan Of Bangalore; it does not identify this candidate or resolve the printed-number discrepancy."
+        }
+      ],
+      "review_status": "pending_human_review",
+      "provenance": {
+        "origin_annotation_file": "outputs/milestone_1/candidate_annotations.json",
+        "annotation_method": "initial visual review of the source map and existing crops; proposed boxes are pending human review"
+      },
+      "annotation_history": [
+        {
+          "action": "migrated_to_feature_catalog",
+          "source": "outputs/milestone_1/candidate_annotations.json",
+          "evidence_status": "annotation_pending_human_review",
+          "note": "Schema adaptation only; feature ID, pixel bounding box, observation wording, interpretation wording, confidence, and review status retained verbatim."
+        }
+      ]
+    },
+    {
+      "feature_id": "GS-1854-002",
+      "display_name": "Possible “Lalbagh Tank” label (uncertain)",
+      "alternative_readings": [
+        "“Lalbagh Tank” (proposed full reading; upper line uncertain)",
+        "“Tank” (lower line appears legible; upper line unresolved)"
+      ],
+      "category": "tank",
+      "annotation_confidence": "medium",
+      "bbox_xyxy": [
+        185,
+        1165,
+        300,
+        1255
+      ],
+      "direct_observations": [
+        "The label \"Lalbagh Tank\" is printed beside an irregular outlined area."
+      ],
+      "interpretation": "A feature explicitly named as a tank on the historical map; current identity and water status are unverified.",
+      "uncertainty_notes": [
+        "The upper line is not securely transcribed; “Lalbagh” remains a possible reading.",
+        "The reviewed 2012 article discusses 1791-map analysis and does not identify this specific 1854 feature.",
+        "The outline could depict water, a bund, a parcel, or another boundary."
+      ],
+      "evidence_needed": [
+        "Compare the label with a high-resolution archival or atlas scan whose edition and sheet numbering are documented.",
+        "Record a human transcription while retaining an ambiguous reading if letters remain unclear; do not use OCR as the deciding evidence.",
+        "Compare multiple contemporaneous maps using independently identifiable landmarks and toponyms. The 2012 article is contextual evidence only and does not identify this 1854 feature."
+      ],
+      "evidence_status": "unverified",
+      "evidence_references": [
+        {
+          "reference_id": "original-map-scan",
+          "source": "data/raw/bangalore_1854.jpg",
+          "evidence_status": "source_scan_context_only",
+          "scope_note": "Original raster containing the marked source-image pixels; it does not establish a modern location."
+        },
+        {
+          "reference_id": "milestone-1-annotation",
+          "source": "outputs/milestone_1/candidate_annotations.json",
+          "evidence_status": "annotation_pending_human_review",
+          "scope_note": "Existing observation and interpretation are retained as annotation text and remain pending review."
+        },
+        {
+          "reference_id": "candidate-research-note",
+          "source": "docs/candidate_research.md#gs-1854-002",
+          "evidence_status": "research_note_unverified",
+          "scope_note": "Research summary of visible evidence and unresolved identity questions; not independent identity confirmation."
+        },
+        {
+          "reference_id": "british-library-sheet-record",
+          "source": "https://searcharchives.bl.uk/catalog/041-002248113",
+          "evidence_status": "catalog_context_only",
+          "scope_note": "Catalogue context for No. 48 Plan Of Bangalore; it does not identify this candidate or resolve the printed-number discrepancy."
+        }
+      ],
+      "review_status": "pending_human_review",
+      "provenance": {
+        "origin_annotation_file": "outputs/milestone_1/candidate_annotations.json",
+        "annotation_method": "initial visual review of the source map and existing crops; proposed boxes are pending human review"
+      },
+      "annotation_history": [
+        {
+          "action": "migrated_to_feature_catalog",
+          "source": "outputs/milestone_1/candidate_annotations.json",
+          "evidence_status": "annotation_pending_human_review",
+          "note": "Schema adaptation only; feature ID, pixel bounding box, observation wording, interpretation wording, confidence, and review status retained verbatim."
+        }
+      ]
+    },
+    {
+      "feature_id": "GS-1854-003",
+      "display_name": "Tank (unnamed)",
+      "alternative_readings": [
+        "“Tank” (generic printed label); no proper name recorded"
+      ],
+      "category": "tank",
+      "annotation_confidence": "medium",
+      "bbox_xyxy": [
+        1000,
+        1060,
+        1135,
+        1180
+      ],
+      "direct_observations": [
+        "The printed label \"Tank\" appears within a large irregular bounded area; nearby boundary and drainage-like linework are visible."
+      ],
+      "interpretation": "A feature labeled tank on the historical map; a water-body candidate whose exact extent and present-day status need review.",
+      "uncertainty_notes": [
+        "The label does not establish whether the outline is a water edge, bund, precinct, or separate boundary.",
+        "No distinct proper name or modern identity is established by the reviewed sources."
+      ],
+      "evidence_needed": [
+        "Review the same sheet at archival resolution and consult its map key or related sheets.",
+        "Seek a second historical source that matches more than the generic word Tank, such as a distinctive name and the same adjacent roads, settlements, or fixed landmarks."
+      ],
+      "evidence_status": "unverified",
+      "evidence_references": [
+        {
+          "reference_id": "original-map-scan",
+          "source": "data/raw/bangalore_1854.jpg",
+          "evidence_status": "source_scan_context_only",
+          "scope_note": "Original raster containing the marked source-image pixels; it does not establish a modern location."
+        },
+        {
+          "reference_id": "milestone-1-annotation",
+          "source": "outputs/milestone_1/candidate_annotations.json",
+          "evidence_status": "annotation_pending_human_review",
+          "scope_note": "Existing observation and interpretation are retained as annotation text and remain pending review."
+        },
+        {
+          "reference_id": "candidate-research-note",
+          "source": "docs/candidate_research.md#gs-1854-003",
+          "evidence_status": "research_note_unverified",
+          "scope_note": "Research summary of visible evidence and unresolved identity questions; not independent identity confirmation."
+        },
+        {
+          "reference_id": "british-library-sheet-record",
+          "source": "https://searcharchives.bl.uk/catalog/041-002248113",
+          "evidence_status": "catalog_context_only",
+          "scope_note": "Catalogue context for No. 48 Plan Of Bangalore; it does not identify this candidate or resolve the printed-number discrepancy."
+        }
+      ],
+      "review_status": "pending_human_review",
+      "provenance": {
+        "origin_annotation_file": "outputs/milestone_1/candidate_annotations.json",
+        "annotation_method": "initial visual review of the source map and existing crops; proposed boxes are pending human review"
+      },
+      "annotation_history": [
+        {
+          "action": "migrated_to_feature_catalog",
+          "source": "outputs/milestone_1/candidate_annotations.json",
+          "evidence_status": "annotation_pending_human_review",
+          "note": "Schema adaptation only; feature ID, pixel bounding box, observation wording, interpretation wording, confidence, and review status retained verbatim."
+        }
+      ]
+    }
+  ]
+}

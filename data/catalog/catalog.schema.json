@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ghost-shore:schema:catalog-v1",
+  "title": "Ghost Shore historical feature catalog",
+  "description": "Map-image feature annotations. Coordinates remain pixels in the original raster; this schema carries no latitude, longitude, modern-location, or route fields.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "source_map", "features"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "source_map": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["image_path", "width_px", "height_px", "coordinate_space", "sha256"],
+      "properties": {
+        "image_path": {"const": "data/raw/bangalore_1854.jpg"},
+        "width_px": {"const": 1280},
+        "height_px": {"const": 1557},
+        "coordinate_space": {"const": "source_image_pixels_top_left_xyxy_exclusive"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "features": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/feature"}
+    }
+  },
+  "$defs": {
+    "feature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "feature_id", "display_name", "alternative_readings", "category", "annotation_confidence",
+        "bbox_xyxy", "direct_observations", "interpretation", "uncertainty_notes", "evidence_needed", "evidence_status",
+        "evidence_references", "review_status", "provenance", "annotation_history"
+      ],
+      "properties": {
+        "feature_id": {"type": "string", "pattern": "^GS-1854-[0-9]{3,}$"},
+        "display_name": {"type": "string", "minLength": 1},
+        "alternative_readings": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "category": {"enum": ["tank", "stream", "road", "garden", "settlement", "boundary", "other"]},
+        "annotation_confidence": {"enum": ["low", "medium", "high"]},
+        "bbox_xyxy": {
+          "type": "array", "minItems": 4, "maxItems": 4,
+          "items": {"type": "integer", "minimum": 0},
+          "description": "[x1,y1,x2,y2] top-left-origin source-image pixel box, x2/y2 exclusive; x2>x1 and y2>y1 and extents within source_map dimensions."
+        },
+        "direct_observations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "interpretation": {"type": "string", "minLength": 1},
+        "uncertainty_notes": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "evidence_needed": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "evidence_status": {"enum": ["unverified", "partially_supported", "supported"]},
+        "evidence_references": {
+          "type": "array", "minItems": 1,
+          "items": {"$ref": "#/$defs/evidenceReference"}
+        },
+        "review_status": {"enum": ["pending_human_review", "reviewed", "rejected"]},
+        "provenance": {"$ref": "#/$defs/provenance"},
+        "annotation_history": {
+          "type": "array", "minItems": 1,
+          "items": {"$ref": "#/$defs/historyEvent"}
+        }
+      }
+    },
+    "evidenceReference": {
+      "type": "object", "additionalProperties": false,
+      "required": ["reference_id", "source", "evidence_status", "scope_note"],
+      "properties": {
+        "reference_id": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1, "description": "Project-relative reference path or absolute HTTP(S) URL; not authenticated by the schema."},
+        "evidence_status": {"enum": ["annotation_pending_human_review", "source_scan_context_only", "research_note_unverified", "catalog_context_only"]},
+        "scope_note": {"type": "string", "minLength": 1}
+      }
+    },
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["origin_annotation_file", "annotation_method"],
+      "properties": {
+        "origin_annotation_file": {"type": "string", "minLength": 1},
+        "annotation_method": {"type": "string", "minLength": 1}
+      }
+    },
+    "historyEvent": {
+      "type": "object", "additionalProperties": false,
+      "required": ["action", "source", "evidence_status", "note"],
+      "properties": {
+        "action": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "evidence_status": {"enum": ["annotation_pending_human_review", "source_scan_context_only", "research_note_unverified", "catalog_context_only"]},
+        "note": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

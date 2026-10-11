@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#102c2b">
+    <meta name="description" content="Explore candidate water features marked on an 1854 map of Bangalore, with historical evidence kept separate from interpretation.">
+    <title>Ghost Shore — historical map explorer</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Ghost Shore home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M4 25c5-6 9-6 14 0s9 6 18 0M4 32c5-6 9-6 14 0s9 6 18 0" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M12 19V9l8-4 8 4v10" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="brand-name">GHOST <i>SHORE</i></span>
+      </a>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a class="nav-current" href="#explorer">The map</a>
+        <a href="#field-expedition">Field Expedition ✳</a>
+        <a href="#method">How to read this</a>
+      </nav>
+      <div class="archive-pill"><span class="pulse-dot"></span> TOUCH GRASS · FIELD COMPANION</div>
+    </header>
+
+    <main id="top">
+      <section class="intro" id="explorer" aria-labelledby="page-title">
+        <div class="intro-copy">
+          <p class="eyebrow"><span>AN ATLAS OF POSSIBILITIES</span><span class="eyebrow-rule"></span><span>EST. 1854</span></p>
+          <h1 id="page-title">What does the old map<br class="desktop-break"> <em>actually show?</em></h1>
+          <p class="dek">Ghost Shore compares a historic Bangalore map with recorded evidence to help people review possible water features—without mistaking a map label for a confirmed place.</p>
+        </div>
+        <div class="intro-note" aria-label="Evidence status">
+          <span class="note-icon" aria-hidden="true">i</span>
+          <div><strong>Open investigation</strong><span id="feature-status-summary">Loading feature catalog…</span></div>
+        </div>
+      </section>
+
+      <section class="explorer-grid" aria-label="Historical map explorer">
+        <article class="map-card card">
+          <div class="map-card-head">
+            <div>
+              <p class="eyebrow small-eyebrow">ARCHIVE SCAN <span class="tiny-dot"></span> BANGALORE</p>
+              <h2>Plan of Bangalore <span>· c. 1854</span></h2>
+            </div>
+            <span class="scan-tag"><span class="status-dot"></span> ORIGINAL SCAN</span>
+          </div>
+
+          <div class="map-window" id="map-window" aria-label="Map viewer. Drag to pan and use the mouse wheel or controls to zoom.">
+            <div class="map-scene" id="map-scene">
+              <img id="historical-map" src="/historical-map" alt="Original 1854 Bangalore historical map scan, 1280 by 1557 pixels" draggable="false">
+              <div class="candidate-overlays" id="candidate-overlays" aria-label="Candidate annotation boxes on the historical map"></div>
+            </div>
+            <div class="map-loading" id="map-loading"><span class="loader"></span> Loading archival scan</div>
+            <div class="map-error hidden" id="map-error">The local map scan could not be loaded. Restart the explorer from the project folder and try again.</div>
+            <div class="zoom-controls" aria-label="Map zoom controls">
+              <button id="inspect-region" class="map-action-button" type="button" disabled>INSPECT THIS REGION</button>
+              <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
+              <button id="zoom-out" type="button" aria-label="Zoom out">−</button>
+              <span class="zoom-divider"></span>
+              <button id="zoom-reset" class="fit-button" type="button" aria-label="Show full map">FULL MAP</button>
+            </div>
+            <div class="map-hint"><span class="drag-icon" aria-hidden="true">↔</span> DRAG TO EXPLORE</div>
+          </div>
+
+          <div class="map-caption">
+            <div class="caption-key"><span class="key-box"></span> Annotation area <span class="key-marker"></span> Selected candidate</div>
+            <span>Source image · 1280 × 1557 px</span>
+          </div>
+          <div class="catalog-note">
+            <span class="catalog-icon" aria-hidden="true">⌑</span>
+            <p><strong>Catalogue numbering remains unresolved.</strong> The scan appears to print “43”; the British Library catalogue describes “No. 48.” The records do not establish that these numbers use the same system.</p>
+          </div>
+        </article>
+
+        <aside class="dossier card" aria-labelledby="candidate-heading">
+          <div class="dossier-head">
+            <div>
+              <p class="eyebrow small-eyebrow">HISTORICAL FEATURE CATALOG</p>
+              <h2 id="candidate-heading">Browse map annotations</h2>
+            </div>
+            <span class="pending-badge" id="catalog-total"><span></span> 3 ENTRIES</span>
+          </div>
+
+          <div class="catalog-controls">
+            <label class="search-control"><span class="search-icon" aria-hidden="true">⌕</span><input id="catalog-search" type="search" placeholder="Search ID, name, or category" autocomplete="off" aria-label="Search catalog by ID, name, or category"></label>
+            <div class="filter-row">
+              <label>Category<select id="category-filter" aria-label="Filter by category"><option value="all">All categories</option></select></label>
+              <label>Review status<select id="status-filter" aria-label="Filter by review status"><option value="all">All statuses</option></select></label>
+            </div>
+          </div>
+          <div class="catalog-count" id="catalog-count" aria-live="polite">Loading catalog…</div>
+          <div class="catalog-list" id="catalog-list" role="listbox" aria-label="Historical map features"></div>
+
+          <div class="detail-empty" id="detail-empty">
+            <span class="empty-glyph" aria-hidden="true">⌖</span>
+            <strong>Select a catalog entry</strong>
+            <span>Choose a feature above or tap a marked area on the map.</span>
+          </div>
+          <div class="candidate-detail hidden" id="candidate-detail" aria-live="polite">
+            <div class="candidate-title-row">
+              <div><p class="candidate-index" id="candidate-index">CATALOG FEATURE</p><h3 id="candidate-name"></h3><span class="catalog-feature-id" id="candidate-id"></span></div>
+              <span class="review-state" id="review-state"></span>
+            </div>
+            <p class="pixel-coords" id="pixel-coords"></p>
+            <div class="feature-tags"><span id="feature-category"></span><span id="feature-evidence-status"></span></div>
+            <section class="evidence-block reading-block" id="readings-block">
+              <h4><span class="section-symbol">≋</span> Alternative readings</h4>
+              <ul id="readings-list"></ul>
+            </section>
+            <section class="evidence-block observed-block">
+              <h4><span class="section-symbol">◉</span> Direct map observations</h4>
+              <ul id="observation-list"></ul>
+              <span class="evidence-tag">ANNOTATION TEXT · PENDING HUMAN REVIEW</span>
+            </section>
+            <section class="evidence-block interpretation-block">
+              <h4><span class="section-symbol">⌁</span> Possible interpretation</h4>
+              <p id="interpretation-text"></p>
+            </section>
+            <section class="evidence-block hypothesis-block">
+              <h4><span class="section-symbol">?</span> Uncertainty notes</h4>
+              <ul id="uncertainty-list"></ul>
+            </section>
+            <section class="evidence-block missing-evidence-block">
+              <h4><span class="section-symbol">＋</span> Evidence still needed</h4>
+              <ul id="evidence-needed-list"></ul>
+            </section>
+            <section class="evidence-block needed-block">
+              <h4><span class="section-symbol">↗</span> Evidence references</h4>
+              <ul id="evidence-list"></ul>
+            </section>
+            <section class="guided-review" aria-labelledby="guided-review-heading">
+              <div class="guided-review-heading">
+                <div><p class="eyebrow small-eyebrow">HUMAN REVIEW · PRIVATE TO THIS BROWSER</p><h4 id="guided-review-heading">A careful look, step by step</h4></div>
+                <span class="review-state-reminder">Checklist does not change review status</span>
+              </div>
+              <label class="review-check"><input type="checkbox" data-review-step="region"><span><strong>Inspect the marked region</strong><small>Use “Inspect this region” to enlarge the original-image pixel box and its context.</small></span></label>
+              <label class="review-check"><input type="checkbox" data-review-step="source"><span><strong>Check source context</strong><small>Open a cited source or the research note. A lead marked unverified still needs verification.</small></span></label>
+              <label class="review-check"><input type="checkbox" data-review-step="notes"><span><strong>Record a research note</strong><small>Keep what you observed separate from any interpretation or open question.</small></span></label>
+              <label class="research-note-label" for="research-note">Private research note</label>
+              <textarea id="research-note" rows="4" placeholder="Record what you checked, what you can see, and what remains uncertain."></textarea>
+              <div class="research-note-actions"><button id="save-research-note" type="button">Save note on this browser</button><span id="research-note-status" aria-live="polite">Not saved</span></div>
+              <p class="review-status-caveat">Notes and checklist stay in this browser only. They are not added to the catalog, do not verify a source, and never mark a feature as reviewed or verified.</p>
+            </section>
+            <section class="evidence-block provenance-block">
+              <h4><span class="section-symbol">↺</span> Provenance &amp; annotation history</h4>
+              <p id="provenance-text"></p>
+              <ul id="history-list"></ul>
+            </section>
+            <div class="expedition-shortcut-box">
+              <span class="expedition-shortcut-icon">🧭</span>
+              <div class="expedition-shortcut-copy">
+                <strong>Ground this lead in the real world</strong>
+                <p>Observe public park topography, drainage gradients, and heritage trees safely.</p>
+              </div>
+              <button id="jump-to-expedition" class="expedition-shortcut-btn" type="button">Open Field Expedition ↓</button>
+            </div>
+          </div>
+
+          <div class="dossier-foot">
+            <div class="source-link-mark" aria-hidden="true">↗</div>
+            <div><span>ARCHIVAL REFERENCE</span><a href="https://searcharchives.bl.uk/catalog/041-002248113" target="_blank" rel="noreferrer">British Library · IOR/X/14628/48</a><small>Catalogue record: “No. 48. Plan Of Bangalore”</small></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="expedition-section card" id="field-expedition" aria-labelledby="expedition-title">
+        <div class="expedition-header">
+          <div class="expedition-header-main">
+            <p class="eyebrow"><span class="pulse-dot"></span><span>FIELD EXPEDITION · TOUCH GRASS WEEK 1</span><span class="eyebrow-rule"></span><span>BENGALURU REAL-WORLD EXPLORER</span></p>
+            <h2 id="expedition-title">Ground-Truthing Bengaluru’s <em>Historical Waterscape</em></h2>
+            <p class="dek">Step outside to explore physical topography, historic tree canopies, and civic water features. Compare what is documented on the c.1854 map with visible real-world urban geography—safely, ethically, and without confusing an unverified map label for a confirmed location.</p>
+          </div>
+          <div class="expedition-badge">
+            <span class="expedition-badge-icon">🌿</span>
+            <span>TOUCH GRASS<br><strong>FIELD COMPANION</strong></span>
+          </div>
+        </div>
+
+        <div class="boundary-banner" role="note" aria-label="Historical uncertainty and physical exploration safeguard">
+          <div class="boundary-tag">EPISTEMIC SAFEGUARD</div>
+          <p><strong>Map Annotations ≠ Modern Ground Truth:</strong> All 1854 candidate boxes (such as GS-1854-001, GS-1854-002, GS-1854-003) exist <em>strictly in historical scan pixel coordinates (xyxy)</em> and remain unverified. The public reference sites below (such as Lalbagh Botanical Garden and Ulsoor Lake promenade) are documented civic spaces suitable for observing urban landscape morphology; <strong>visiting a public site does not prove an 1854 candidate was at any specific modern spot or has disappeared.</strong></p>
+        </div>
+
+        <div class="safety-card" aria-label="Mandatory fieldwork safety guidance">
+          <div class="safety-card-head">
+            <span class="safety-icon" aria-hidden="true">⚠️</span>
+            <div>
+              <h3>Mandatory Field Safety Protocols</h3>
+              <p>Explore responsibly. Your safety and community respect come first.</p>
+            </div>
+          </div>
+          <div class="safety-grid">
+            <div class="safety-item">
+              <span class="safety-bullet">☀️</span>
+              <div>
+                <strong>Daylight visits only</strong>
+                <span>Observe during daylight hours with clear visibility. Avoid unlit or isolated paths at dusk.</span>
+              </div>
+            </div>
+            <div class="safety-item">
+              <span class="safety-bullet">🚶</span>
+              <div>
+                <strong>Public pathways only</strong>
+                <span>Stay on municipal footpaths, public park trails (e.g. Lalbagh, Ulsoor promenade), or civic roads. Zero trespassing on private property or fenced compounds.</span>
+              </div>
+            </div>
+            <div class="safety-item">
+              <span class="safety-bullet">🚫</span>
+              <div>
+                <strong>Never enter drains or canals</strong>
+                <span>Keep a safe distance from <em>rajakaluves</em> (stormwater channels), deep trenches, and steep bund drops. Never climb slippery stone walls.</span>
+              </div>
+            </div>
+            <div class="safety-item">
+              <span class="safety-bullet">🦺</span>
+              <div>
+                <strong>Stay clear of construction</strong>
+                <span>Active infrastructure and excavation sites are strictly off-limits. Observe only from behind official public safety barriers.</span>
+              </div>
+            </div>
+            <div class="safety-item">
+              <span class="safety-bullet">🤝</span>
+              <div>
+                <strong>Civic respect &amp; leave no trace</strong>
+                <span>Respect local residents and park visitors. Do not dig, remove artifacts, or disturb flora, fauna, or heritage stones.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="expedition-workspace">
+          <div class="expedition-guide-col">
+            <div class="expedition-lead-selector card-inset">
+              <label for="field-site-select"><strong>Select a Public Reference Site or Catalog Lead:</strong></label>
+              <select id="field-site-select" aria-label="Select public site or catalog feature for field observation">
+                <option value="lead-lalbagh">GS-1854-002: Lalbagh Botanical Garden Precinct (Public Park &amp; Lake)</option>
+                <option value="lead-ulsoor">Ulsoor / Halasuru Lake (Public Promenade &amp; Active Municipal Water Body)</option>
+                <option value="lead-sampangi">Sampangi / Kanteerava Precinct (Civic Stadium &amp; Altered Basin)</option>
+                <option value="lead-fort">Bangalore Fort &amp; Tipu Sultan’s Palace Precinct (Public Heritage Site)</option>
+                <option value="lead-general">General Bengaluru Ridge / Valley Observation (Public Rights-of-Way)</option>
+              </select>
+              <div id="field-lead-context" class="field-lead-context" aria-live="polite"></div>
+            </div>
+
+            <div class="expedition-checklist-box card-inset">
+              <div class="checklist-box-head">
+                <h4><span class="section-symbol">✓</span> Guided Field Observation Checklist</h4>
+                <span class="checklist-progress" id="checklist-progress-badge">0 / 12 observed</span>
+              </div>
+              <p class="checklist-sub">Check off physical landscape indicators visible from your safe public vantage point.</p>
+
+              <div class="checklist-group">
+                <h5>1. Topography &amp; Elevation Gradient</h5>
+                <label class="field-check"><input type="checkbox" data-field-check="topo-depression"><span><strong>Natural basin / depression:</strong> Does the terrain slope downward toward a natural low point?</span></label>
+                <label class="field-check"><input type="checkbox" data-field-check="topo-elevated-road"><span><strong>Elevated street alignment:</strong> Are surrounding modern roads noticeably higher than the open ground?</span></label>
+                <label class="field-check"><input type="checkbox" data-field-check="topo-bund-ridge"><span><strong>Bund embankment morphology:</strong> Can you identify a long raised earthen ridge or road carrying traffic across the valley?</span></label>
+              </div>
+
+              <div class="checklist-group">
+                <h5>2. Visible Water &amp; Drainage Infrastructure</h5>
+                <label class="field-check"><input type="checkbox" data-field-check="water-surface"><span><strong>Active water presence:</strong> Surviving lake, pond, seasonal wetland, or reed bed visible?</span></label>
+                <label class="field-check"><input type="checkbox" data-field-check="water-channel"><span><strong>Stormwater channel / rajakaluve:</strong> Open stone-lined drain or culvert visible from public sidewalks?</span></label>
+                <label class="field-check"><input type="checkbox" data-field-check="water-sluice"><span><strong>Masonry remnants / sluice outlets:</strong> Granite revetment walls, sluice gates (<em>tūbu</em>), or stone steps (<em>kalyani</em>)?</span></label>
+                <label class="field-check"><input type="checkbox" data-field-check="water-wells"><span><strong>Historic wells:</strong> Preserved heritage open wells or ring wells in the public perimeter?</span></label>
+              </div>
+
+              <div class="checklist-group">
+                <h5>3. Ecological &amp; Heritage Indicators</h5>
+                <label class="field-check"><input type="checkbox" data-field-check="eco-trees"><span><strong>Heritage tree canopy:</strong> Mature banyan, peepal, or rain trees commonly planted on historical tank bunds?</span></label>
+                <label class="field-check"><input type="checkbox" data-field-check="eco-inscriptions"><span><strong>Inscriptions / hero stones:</strong> Stone inscriptions (<em>shasanas</em>) or commemorative markers nearby?</span></label>
+                <label class="field-check"><input type="checkbox" data-field-check="eco-landuse"><span><strong>Civic transformation:</strong> Evidence of adaptive public reuse (public botanical garden, stadium, civic bus terminus)?</span></label>
+              </div>
+
+              <div class="checklist-group">
+                <h5>4. Epistemic Uncertainty &amp; Research Gaps</h5>
+                <label class="field-check"><input type="checkbox" data-field-check="epistemic-boundary"><span><strong>No boundary conflation:</strong> Verified that modern park/fence boundaries are not assumed to be 1854 boundaries?</span></label>
+                <label class="field-check"><input type="checkbox" data-field-check="epistemic-nextstep"><span><strong>Archival next step noted:</strong> Documented what dated cadastral survey or archive file is needed next?</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="expedition-notes-col">
+            <div class="field-notes-card card-inset">
+              <div class="field-notes-head">
+                <div>
+                  <p class="eyebrow small-eyebrow">FIELD LOG · LOCAL STORAGE ONLY</p>
+                  <h4>Record Your Ground Observations</h4>
+                </div>
+                <span class="privacy-tag">🔒 PRIVATE TO THIS BROWSER</span>
+              </div>
+              <p class="field-notes-sub">Document tangible physical evidence seen outdoors. Notes are preserved in your local browser and never sent over the network.</p>
+
+              <form id="field-note-form" class="field-form" onsubmit="return false;">
+                <div class="field-form-row">
+                  <label for="field-note-date"><strong>Observation Date:</strong><input type="date" id="field-note-date" required></label>
+                  <label for="field-note-weather"><strong>Weather &amp; Ambient Conditions:</strong><input type="text" id="field-note-weather" placeholder="e.g. Sunny afternoon, dry, 28°C" autocomplete="off"></label>
+                </div>
+
+                <div class="field-form-group">
+                  <label for="field-vantage-point"><strong>Public Vantage Point (No Trespassing):</strong><input type="text" id="field-vantage-point" placeholder="e.g. Lalbagh Botanical Garden West Gate walking path" autocomplete="off" required></label>
+                  <small class="field-hint">Specify the exact public right-of-way, park trail, or sidewalk where you stood.</small>
+                </div>
+
+                <div class="field-form-group">
+                  <label for="field-observations-text"><strong>Tangible Physical Observations:</strong><textarea id="field-observations-text" rows="5" placeholder="Describe physical topography, slope, bund alignment, visible stone masonry, open wells, heritage trees, or current water condition." required></textarea></label>
+                </div>
+
+                <div class="field-form-group">
+                  <label for="field-questions-text"><strong>Unresolved Questions &amp; Missing Evidence:</strong><textarea id="field-questions-text" rows="3" placeholder="What remains uncertain? What dated survey sheets or municipal records are needed to corroborate this observation?"></textarea></label>
+                </div>
+
+                <div class="field-form-actions">
+                  <button id="save-field-note-btn" type="button" class="btn-primary"><span>Save Field Note in Browser</span></button>
+                  <button id="print-field-sheet-btn" type="button" class="btn-secondary"><span>🖨️ Print Field Sheet</span></button>
+                  <button id="reset-field-note-btn" type="button" class="btn-subtle"><span>Clear Form</span></button>
+                </div>
+                <div id="field-note-status" class="field-note-status" aria-live="polite">Not saved yet</div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div id="printable-field-sheet" class="printable-field-sheet" aria-hidden="true"></div>
+      </section>
+
+      <section class="lower-grid" id="method">
+        <article class="assistant-card card">
+          <div class="assistant-topline">
+            <div class="assistant-title"><span class="assistant-orb" aria-hidden="true"><span></span><span></span><span></span></span><div><p class="eyebrow small-eyebrow">RESEARCH COMPANION</p><h2>Ask a careful question.</h2></div></div>
+            <span class="offline-chip"><span></span> OFFLINE DEMO</span>
+          </div>
+          <p class="assistant-copy">Draft a cautious evidence note from the existing local assistant CLI. This deterministic preview makes <strong>no model request</strong> and does not verify the supplied source text.</p>
+          <div class="assistant-empty" id="assistant-empty"><span>Choose a candidate above to prepare an offline note.</span></div>
+          <div class="assistant-output hidden" id="assistant-output" aria-live="polite"></div>
+          <div class="assistant-error hidden" id="assistant-error" role="alert"></div>
+          <div class="assistant-actions"><button class="assistant-button" id="assistant-run" type="button" disabled><span>Draft offline note</span><span aria-hidden="true">↗</span></button><span class="assistant-footnote" id="assistant-footnote">LOCAL MOCK · NO CREDITS · NO LIVE INFERENCE</span></div>
+        </article>
+
+        <article class="source-card card">
+          <div class="source-card-head"><p class="eyebrow small-eyebrow">THE RECORD</p><span class="record-stamp">01 / ARCHIVE</span></div>
+          <h2>A map, a catalogue,<br><em>an open question.</em></h2>
+          <p>The British Library’s parent atlas record dates the Pharoah &amp; Co. atlas to approximately 1854 and attributes engraving to J. &amp; C. Walker. Its digitised-content field is blank in the reviewed record.</p>
+          <div class="source-separators"><span></span><span></span><span></span></div>
+          <div class="source-links">
+            <a href="https://searcharchives.bl.uk/catalog/041-002248113" target="_blank" rel="noreferrer"><span>Sheet catalogue</span><b>IOR/X/14628/48 ↗</b></a>
+            <a href="https://searcharchives.bl.uk/catalog/040-002248065" target="_blank" rel="noreferrer"><span>Parent atlas · c. 1854</span><b>IOR/X/14628 ↗</b></a>
+          </div>
+          <p class="source-caveat">The archive record supports title, scale and collection context. It does not identify the three annotated features or resolve “43” versus “No. 48.”</p>
+        </article>
+      </section>
+
+      <section class="method-strip" aria-label="Georeferencing status">
+        <div class="method-emblem" aria-hidden="true">≈</div>
+        <div><strong>Historical pixels only.</strong> Candidate marks point to boxes on this scan; none is placed on a modern map.</div>
+        <div class="method-divider"></div>
+        <div class="method-result"><span class="result-dot"></span><div><strong>Alignment not independently validated</strong><small>All 3 candidate centers fall outside the existing control-point bounds.</small></div></div>
+        <a class="method-link" href="/georeferencing-validation" target="_blank" rel="noreferrer">Read validation notes ↗</a>
+      </section>
+    </main>
+
+    <footer class="footer"><a class="footer-brand" href="#top">GHOST SHORE</a><span>HISTORICAL EVIDENCE · HUMAN REVIEW · OPEN QUESTIONS</span><span>BUILT FOR SLOW LOOKING <b>✳</b></span></footer>
+  </body>
+</html>
